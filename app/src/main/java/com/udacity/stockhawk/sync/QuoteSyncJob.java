@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.data.QuoteBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public final class QuoteSyncJob {
     private static final int INITIAL_BACKOFF = 10000;
     private static final int PERIODIC_ID = 1;
     private static final int YEARS_OF_HISTORY = 2;
+    private static final boolean USE_YAHOO = false;
 
     private QuoteSyncJob() {
     }
@@ -64,7 +66,7 @@ public final class QuoteSyncJob {
                 return;
             }
 
-            Map<String, Stock> quotes = YahooFinance.get(stockArray);
+            Map<String, Stock> quotes = getQuotes(stockArray);
             Iterator<String> iterator = stockCopy.iterator();
 
             Timber.d(quotes.toString());
@@ -91,7 +93,11 @@ public final class QuoteSyncJob {
 
                 // WARNING! Don't request historical data for a stock that doesn't exist!
                 // The request will hang forever X_x
-                List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
+
+                // TODO: 19/5/17 RESET HISTORY 
+                //List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
+                List<HistoricalQuote> history = stock.getHistory();
+
 
                 StringBuilder historyBuilder = new StringBuilder();
 
@@ -124,6 +130,14 @@ public final class QuoteSyncJob {
             Timber.e(exception, "Error fetching stock quotes");
             showErrorToast(context, "Error fetching stock quotes");
         }
+    }
+
+    private static Map<String, Stock> getQuotes(String[] stockArray) throws IOException {
+       if(USE_YAHOO){
+           return YahooFinance.get(stockArray);
+       }else {
+           return QuoteBuilder.generateFakeQuotes(stockArray);
+       }
     }
 
     private static void schedulePeriodic(Context context) {
