@@ -5,7 +5,6 @@
 
     <string name="pref_stocks_key">stocks</string>
 
-
     <string name="pref_display_mode_key">displayMode</string>
     <string name="pref_display_mode_default">@string/pref_display_mode_percentage_key</string>
 
@@ -33,5 +32,6 @@
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="add_new_stock_description">Add a new stock</string>
     <string name="title_activity_stock_history">StockHistoryActivity</string>
+    <string name="invalid_stock_message">is not a valid stock</string>
 
 </resources>

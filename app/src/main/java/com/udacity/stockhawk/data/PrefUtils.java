@@ -1,7 +1,9 @@
 package com.udacity.stockhawk.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 
 import com.udacity.stockhawk.R;
@@ -87,5 +89,4 @@ public final class PrefUtils {
 
         editor.apply();
     }
-
 }
