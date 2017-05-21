@@ -33,5 +33,7 @@
     <string name="add_new_stock_description">Add a new stock</string>
     <string name="title_activity_stock_history">StockHistoryActivity</string>
     <string name="invalid_stock_message">is not a valid stock</string>
+    <string name="stock_widget">Stock Widget</string>
+    <string name="widget_error_no_stocks">No stocks added yet.</string>
 
 </resources>

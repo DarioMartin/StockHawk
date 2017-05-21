@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                QuoteSyncJob.syncImmediately(MainActivity.this);
             }
         }).attachToRecyclerView(stockRecyclerView);
     }
@@ -149,9 +150,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         swipeRefreshLayout.setRefreshing(false);
-
         if (data.getCount() != 0) {
             error.setVisibility(View.GONE);
+        }else{
+            error.setText(getString(R.string.error_no_stocks));
+            error.setVisibility(View.VISIBLE);
         }
         adapter.setCursor(data);
     }
