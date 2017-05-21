@@ -1,6 +1,8 @@
 package com.udacity.stockhawk.ui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.base.MoreObjects;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
@@ -27,6 +30,7 @@ import com.udacity.stockhawk.sync.QuoteSyncJob;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
+import yahoofinance.Stock;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
@@ -47,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onClick(String symbol) {
         Timber.d("Symbol clicked: %s", symbol);
+
+        Intent intent = new Intent(this, StockHistoryActivity.class);
+        intent.putExtra(StockHistoryActivity.SYMBOL, symbol);
+        startActivity(intent);
+
     }
 
     @Override
@@ -78,10 +87,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                QuoteSyncJob.syncImmediately(MainActivity.this);
             }
         }).attachToRecyclerView(stockRecyclerView);
-
-
     }
 
     private boolean networkUp() {
@@ -142,9 +150,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         swipeRefreshLayout.setRefreshing(false);
-
         if (data.getCount() != 0) {
             error.setVisibility(View.GONE);
+        }else{
+            error.setText(getString(R.string.error_no_stocks));
+            error.setVisibility(View.VISIBLE);
         }
         adapter.setCursor(data);
     }
@@ -177,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_change_units) {
             PrefUtils.toggleDisplayMode(this);
             setDisplayModeMenuItemIcon(item);
@@ -186,4 +195,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

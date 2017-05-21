@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import yahoofinance.Stock;
 
 class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
@@ -132,7 +133,5 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
             clickHandler.onClick(cursor.getString(symbolColumn));
 
         }
-
-
     }
 }
