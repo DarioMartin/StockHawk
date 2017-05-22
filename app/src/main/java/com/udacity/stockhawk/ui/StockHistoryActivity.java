@@ -1,5 +1,6 @@
 package com.udacity.stockhawk.ui;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -46,7 +47,12 @@ public class StockHistoryActivity extends AppCompatActivity implements LoaderMan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_history);
 
-        symbol = getIntent().getExtras().getString(SYMBOL);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(SYMBOL)) {
+            symbol = getIntent().getStringExtra(SYMBOL);
+        } else {
+            finish();
+        }
 
         setTitle(symbol);
 

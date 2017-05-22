@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="pref_stocks_key">stocks</string>
-
-    <string name="pref_display_mode_key">displayMode</string>
-    <string name="pref_display_mode_default">@string/pref_display_mode_percentage_key</string>
-
-    <string name="pref_display_mode_absolute_key">absolute</string>
-    <string name="pref_display_mode_percentage_key">percentage</string>
-
-    <string name="action_change_units">@string/pref_display_mode_key</string>
-
     <string name="dialog_title">Add Stock</string>
     <string name="dialog_hint">Symbol (e.g. GOOG)</string>
     <string name="dialog_cancel">Cancel</string>
@@ -21,8 +11,10 @@
 
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
-
     <string name="add_new_stock_description">Add a new stock</string>
+    <string name="title_activity_stock_history">StockHistoryActivity</string>
+    <string name="invalid_stock_message">is not a valid stock</string>
+    <string name="stock_widget">Stock Widget</string>
     <string name="widget_error_no_stocks">No stocks added yet.</string>
 
 </resources>
