@@ -30,8 +30,9 @@
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="add_new_stock_description">Add a new stock</string>
     <string name="title_activity_stock_history">StockHistoryActivity</string>
-    <string name="invalid_stock_message">is not a valid stock</string>
+    <string name="invalid_stock_message">%s is not a valid stock</string>
     <string name="stock_widget">Stock Widget</string>
     <string name="widget_error_no_stocks">No stocks added yet.</string>
+    <string name="error_fetching_stock_quotes">Error fetching stock quotes</string>
 
 </resources>

@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.mock.MockUtils;
@@ -80,7 +81,7 @@ public final class QuoteSyncJob {
 
                 if (!stock.isValid()) {
                     PrefUtils.removeStock(context, symbol);
-                    showErrorToast(context, symbol + " is not a valid symbol");
+                    showErrorToast(context, String.format(context.getString(R.string.invalid_stock_message), symbol));
                     continue;
                 }
 
@@ -126,7 +127,7 @@ public final class QuoteSyncJob {
 
         } catch (IOException exception) {
             Timber.e(exception, "Error fetching stock quotes");
-            showErrorToast(context, "Error fetching stock quotes");
+            showErrorToast(context, context.getString(R.string.error_fetching_stock_quotes));
         }
     }
 
